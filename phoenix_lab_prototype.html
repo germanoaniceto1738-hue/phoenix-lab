@@ -1,0 +1,185 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Phoenix Lab — Prototype</title>
+<style>
+:root{--bg:#050505;--card:#101012;--line:#29292d;--txt:#f5f5f5;--muted:#999;--red:#ed1c24;--gold:#ffb000}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--bg);color:var(--txt);font-family:Arial,Helvetica,sans-serif}
+button,input,textarea{font:inherit}button{cursor:pointer}.top{height:36px;border-bottom:1px solid #222;padding:0 30px;display:flex;align-items:center;justify-content:space-between;font-size:12px;color:#ddd}
+.nav{height:76px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:28px;padding:0 30px;position:sticky;top:0;background:rgba(5,5,5,.95);backdrop-filter:blur(12px);z-index:20}
+.logo{display:flex;align-items:center;gap:9px;text-decoration:none;color:#fff;min-width:190px}.mark{width:42px;height:42px;border:2px solid #fff;border-radius:5px;display:grid;place-items:center;font-weight:900;font-size:25px}.mark b{color:var(--red)}.logotxt{font-size:21px;font-weight:900;line-height:.85}.logotxt span{display:block;color:var(--red)}
+.links{display:flex;gap:25px;flex:1}.links a{color:#eee;text-decoration:none;font-size:14px}.links a:hover{color:var(--red)}
+.search{width:220px;height:40px;background:#111;color:#fff;border:1px solid #36363a;border-radius:8px;padding:0 12px}.cart{background:none;border:0;color:#fff;font-size:21px;position:relative}.badge{position:absolute;right:-8px;top:-7px;background:var(--red);font-size:10px;border-radius:20px;padding:3px 6px}
+.hero{max-width:1400px;margin:auto;min-height:450px;padding:55px 30px;display:grid;grid-template-columns:1fr 1fr;align-items:center;overflow:hidden}.hero h1{font-size:56px;line-height:1;margin:10px 0 18px;letter-spacing:-2px}.hero h1 span{color:var(--red)}.eyebrow{font-size:12px;color:var(--red);font-weight:bold;letter-spacing:2px}.hero p{color:#ccc;max-width:520px;line-height:1.55}.buttons{display:flex;gap:10px;margin-top:24px}.btn{border:1px solid #444;background:#111;color:#fff;border-radius:8px;padding:12px 17px;font-weight:bold}.btn.red{background:var(--red);border-color:var(--red)}
+.visual{height:370px;display:grid;place-items:center;position:relative}.visual:before{content:"";position:absolute;width:420px;height:420px;border:1px solid #8e1117;border-radius:50%;box-shadow:0 0 90px #5b0b10}.phone{width:210px;height:350px;border-radius:32px;border:7px solid #29292d;background:linear-gradient(145deg,#333,#070707);position:relative;z-index:2;transform:rotate(6deg);box-shadow:0 30px 70px #000}.phone:before{content:"";display:block;width:52px;height:7px;border-radius:8px;background:#080808;margin:8px auto}.phone:after{content:"";display:block;width:166px;height:255px;margin:25px auto;border-radius:13px;background:linear-gradient(135deg,#34343a,#070707 55%,#202024)}
+.wrap{max-width:1400px;margin:auto;padding:0 30px}.trust{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--line);border-radius:10px;overflow:hidden}.trust div{padding:18px;border-right:1px solid var(--line)}.trust div:last-child{border:0}.trust small{display:block;color:var(--muted);margin-top:5px}
+.cats{display:grid;grid-template-columns:repeat(7,1fr);gap:9px;margin-top:20px}.cat{background:var(--card);border:1px solid var(--line);border-radius:9px;padding:18px 10px;transition:.2s}.cat:hover,.cat.active{border-color:var(--red);transform:translateY(-2px)}.cat .pic{height:48px;display:grid;place-items:center;font-size:32px}.cat small{display:block;color:#888;margin-top:5px}
+section.content{margin-top:40px}.head{display:flex;justify-content:space-between;align-items:center;margin-bottom:15px}.head h2{margin:0;font-size:29px}.head a{color:var(--red);font-weight:bold;text-decoration:none}
+.products{display:grid;grid-template-columns:repeat(5,1fr);gap:13px}.product{background:linear-gradient(180deg,#111113,#09090a);border:1px solid var(--line);border-radius:10px;padding:11px;position:relative;transition:.2s}.product:hover{transform:translateY(-4px);border-color:#555}.tag{position:absolute;top:9px;left:9px;background:var(--red);padding:5px 7px;border-radius:4px;font-size:9px;font-weight:bold}.photo{height:190px;background:#161619;border-radius:8px;display:grid;place-items:center;margin-bottom:11px}.fakephone{width:75px;height:145px;border-radius:13px;background:linear-gradient(140deg,#444,#080808);border:2px solid #666}.fakebuds{width:105px;height:75px;border-radius:22px;background:#eee;position:relative}.fakebuds:after{content:"";position:absolute;left:25px;right:25px;top:25px;height:10px;background:#bbb;border-radius:10px}.fakecharger{width:65px;height:90px;background:#eee;border-radius:10px}.fakecase{width:70px;height:145px;border:5px solid #444;border-radius:16px}.product h3{font-size:14px;margin:0 0 5px}.sub{font-size:12px;color:#999}.price{font-size:18px;font-weight:900;margin:10px 0}.old{text-decoration:line-through;color:#666;font-size:11px}.stars{color:var(--gold);font-size:11px;margin-bottom:9px}.add{width:calc(100% - 43px);background:#111;border:1px solid #444;color:#fff;border-radius:7px;padding:9px;font-weight:bold;font-size:11px}.heart{width:38px;padding:9px;background:none;color:#fff;border:1px solid #333;border-radius:7px}
+.offers{display:grid;grid-template-columns:1.3fr .7fr;gap:13px}.offer{background:#101012;border:1px solid #333;border-radius:10px;padding:26px}.offer.redline{border-color:#5a171b}.offer h3{margin:0 0 7px;font-size:23px}.offer p{color:#aaa}.big{font-size:43px;color:var(--red);font-weight:900}
+.repair{display:grid;grid-template-columns:1fr 1fr;gap:15px}.box{background:#101012;border:1px solid var(--line);border-radius:10px;padding:24px}.form{display:grid;grid-template-columns:1fr 1fr;gap:9px}.field{background:#080809;color:#fff;border:1px solid #333;border-radius:7px;padding:11px;width:100%}.full{grid-column:1/-1}
+footer{margin-top:55px;border-top:1px solid var(--line);padding:30px;color:#888}.drawer{position:fixed;top:0;right:-420px;width:400px;height:100vh;background:#0c0c0e;border-left:1px solid #333;z-index:50;padding:22px;transition:.3s;box-shadow:-20px 0 60px #000}.drawer.open{right:0}.drawer button.close{float:right;background:none;border:0;color:#fff;font-size:28px}.cartrow{display:flex;gap:10px;padding:14px 0;border-bottom:1px solid #29292d}.overlay{display:none;position:fixed;inset:0;background:#0009;z-index:40}.overlay.show{display:block}.mobilebar{display:none}
+/* =========================
+   DESKTOP : expérience boutique
+   ========================= */
+@media(min-width:951px){
+  .mobilebar{display:none}
+  .nav{min-width:1100px}
+  .hero{min-height:500px}
+  .hero h1{font-size:58px}
+  .visual{display:grid}
+  .products{grid-template-columns:repeat(5,1fr)}
+}
+
+/* =========================
+   TABLETTE
+   ========================= */
+@media(max-width:950px){
+  .links{display:none}
+  .nav{padding:0 18px;height:68px}
+  .logo{min-width:160px}
+  .search{flex:1;max-width:300px}
+  .hero{grid-template-columns:1fr;padding:42px 22px;min-height:auto}
+  .visual{display:none}
+  .wrap{padding:0 22px}
+  .cats{grid-template-columns:repeat(4,1fr)}
+  .products{grid-template-columns:repeat(2,1fr)}
+  .repair,.offers{grid-template-columns:1fr}
+  .mobilebar{display:flex;position:fixed;bottom:0;left:0;right:0;background:#080809;border-top:1px solid #333;z-index:30;justify-content:space-around;padding:9px 5px 8px}
+  .mobilebar button{background:none;border:0;color:#ddd;font-size:11px;min-width:62px}
+}
+
+/* =========================
+   MOBILE : interface dédiée
+   ========================= */
+@media(max-width:600px){
+  body{padding-bottom:62px}
+  .top{display:none}
+  .nav{height:62px;padding:0 12px;gap:10px;position:sticky;top:0}
+  .logo{min-width:0;gap:6px}
+  .mark{width:32px;height:32px;font-size:19px;border-radius:4px}
+  .logotxt{font-size:15px}
+  .search{display:none}
+  .cart{margin-left:auto;font-size:19px}
+
+  .hero{
+    display:block;
+    padding:28px 16px 22px;
+    min-height:0;
+    background:radial-gradient(circle at 90% 25%,#35080b 0,transparent 35%);
+  }
+  .eyebrow{font-size:10px;letter-spacing:1.5px}
+  .hero h1{font-size:35px;line-height:1.02;letter-spacing:-1.2px;margin:9px 0 13px}
+  .hero p{font-size:14px;line-height:1.45;margin:0}
+  .buttons{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:18px}
+  .btn{padding:11px 8px;font-size:12px}
+
+  .wrap{padding:0 12px}
+  .trust{grid-template-columns:1fr 1fr;margin-top:8px}
+  .trust div{padding:12px 10px;font-size:11px}
+  .trust small{font-size:10px}
+
+  .cats{
+    display:flex;
+    overflow-x:auto;
+    gap:8px;
+    padding:4px 1px 8px;
+    scrollbar-width:none;
+  }
+  .cats::-webkit-scrollbar{display:none}
+  .cat{min-width:116px;padding:12px 9px}
+  .cat .pic{height:35px;font-size:25px}
+  .cat b{font-size:12px}
+  .cat small{font-size:9px}
+
+  section.content{margin-top:28px}
+  .head h2{font-size:22px}
+  .head a{font-size:11px}
+
+  .products{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:8px;
+  }
+  .product{
+    padding:8px;
+    border-radius:8px;
+  }
+  .photo{height:145px;margin-bottom:8px}
+  .fakephone{width:60px;height:115px}
+  .fakebuds{transform:scale(.82)}
+  .fakecharger{transform:scale(.8)}
+  .fakecase{width:58px;height:116px}
+  .product h3{font-size:12px;line-height:1.2;margin-bottom:4px}
+  .sub{font-size:10px;line-height:1.25;min-height:25px}
+  .price{font-size:15px;margin:7px 0}
+  .stars{font-size:9px;margin-bottom:7px}
+  .add{width:calc(100% - 35px);padding:8px 4px;font-size:9px}
+  .heart{width:31px;padding:8px 3px;font-size:13px}
+
+  .offer{padding:18px}
+  .offer h3{font-size:20px}
+  .big{font-size:34px}
+
+  .repair{gap:9px}
+  .box{padding:17px}
+  .form{grid-template-columns:1fr}
+  .full{grid-column:auto}
+
+  footer{padding:25px 12px;font-size:11px}
+  .drawer{width:94vw}
+}
+</style>
+</head>
+<body>
+<div class="top"><div>Livraison 24/48h partout en Belgique &nbsp; • &nbsp; Garantie 2 ans &nbsp; • &nbsp; Service client 7j/7</div><div>Suivre ma commande &nbsp; • &nbsp; Connexion</div></div>
+<nav class="nav">
+<a class="logo" href="#home" aria-label="Phoenix Lab - Accueil"><div class="mark"><b>P</b></div><div class="logotxt">PHOENIX<span>LAB</span></div></a>
+<div class="links"><a href="#home">Accueil</a><a href="#products">Smartphones</a><a href="#products">Accessoires</a><a href="#repair">Réparations</a><a href="#offers">Offres</a><a href="#contact">Contact</a></div>
+<input id="search" class="search" placeholder="Rechercher un produit...">
+<button class="cart" onclick="openCart()">🛒<span id="count" class="badge">0</span></button>
+</nav>
+
+<main id="home">
+<section class="hero"><div><div class="eyebrow">PHOENIX LAB • BOUTIQUE EN LIGNE</div><h1>La technologie<br><span>à portée de main</span></h1><p>Smartphones neufs & d’occasion, protections, coques, chargeurs, audio et réparations au meilleur prix.</p><div class="buttons"><button class="btn red" onclick="document.querySelector('#products').scrollIntoView()">Découvrir la boutique →</button><button class="btn" onclick="document.querySelector('#repair').scrollIntoView()">Nos réparations ⚒</button></div></div><div class="visual"><div class="phone"></div></div></section>
+
+<div class="wrap"><div class="trust"><div><b>Produits garantis</b><small>2 ans minimum</small></div><div><b>Livraison rapide</b><small>24/48h partout</small></div><div><b>Paiement sécurisé</b><small>CB, PayPal, Bancontact</small></div><div><b>Service client 7j/7</b><small>Réponse rapide</small></div></div>
+<div class="cats"><div class="cat active" onclick="filter('all')"><div class="pic">▣</div><b>Smartphones</b><small>Voir tout →</small></div><div class="cat" onclick="filter('accessoire')"><div class="pic">◉</div><b>Accessoires</b><small>Voir tout →</small></div><div class="cat" onclick="filter('coque')"><div class="pic">▣</div><b>Coques</b><small>Voir tout →</small></div><div class="cat" onclick="filter('chargeur')"><div class="pic">▥</div><b>Chargeurs</b><small>Voir tout →</small></div><div class="cat" onclick="filter('audio')"><div class="pic">◌</div><b>Audio</b><small>Voir tout →</small></div><div class="cat"><div class="pic">◴</div><b>Montres</b><small>Voir tout →</small></div><div class="cat" onclick="document.querySelector('#offers').scrollIntoView()"><div class="pic">%</div><b>Offres</b><small>Voir tout →</small></div></div>
+
+<section id="products" class="content"><div class="head"><h2>Nos meilleures ventes</h2><a href="#">Voir tout →</a></div><div id="grid" class="products"></div></section>
+<section id="offers" class="content"><div class="offers"><div class="offer redline"><div class="eyebrow">OFFRE RENTRÉE SEPTEMBRE</div><h3>Verre trempé OFFERT</h3><p>Sur tous les GSM d’occasion pendant la rentrée.</p></div><div class="offer"><div class="big">3×</div><h3>Paiement sans frais</h3><p>À partir de 100 € d’achat.</p></div></div></section>
+<section id="repair" class="content"><div class="head"><h2>Réparation</h2></div><div class="repair"><div class="box"><h3>Votre appareil a un problème ?</h3><p>Consultez les tarifs, puis envoyez votre demande par e-mail ou WhatsApp.</p><ul><li>Tarifs visibles par le client</li><li>Techniciens qualifiés</li><li>Demande rapide</li></ul></div><div class="box"><h3>Demande de réparation</h3><div class="form"><input class="field" placeholder="Nom et prénom"><input class="field" placeholder="Téléphone"><input class="field" placeholder="E-mail"><input class="field" placeholder="Modèle"><textarea class="field full" rows="4" placeholder="Décrivez le problème"></textarea><button class="btn red full" onclick="alert('Prototype : la demande serait envoyée par e-mail / WhatsApp.')">Envoyer ma demande</button></div></div></div></section>
+<section id="contact" class="content"><div class="box"><h3>Phoenix Lab</h3><p>0493 32 93 91 • lephoenixlab@gmail.be</p></div></section>
+</div></main>
+<footer>© Phoenix Lab — Prototype e-commerce</footer>
+
+<div id="overlay" class="overlay" onclick="closeCart()"></div>
+<aside id="drawer" class="drawer"><button class="close" onclick="closeCart()">×</button><h2>Votre panier</h2><div id="cart"></div><h3 style="display:flex;justify-content:space-between"><span>Total</span><span id="total">0,00 €</span></h3><button class="btn red" style="width:100%" onclick="alert('Prototype : passage au paiement.')">Passer commande</button></aside>
+<div class="mobilebar"><button onclick="scrollTo(0,0)">⌂<br>Accueil</button><button onclick="document.querySelector('#products').scrollIntoView()">▦<br>Boutique</button><button onclick="document.querySelector('#repair').scrollIntoView()">⚒<br>Réparation</button><button onclick="openCart()">🛒<br>Panier</button><button onclick="document.querySelector('#contact').scrollIntoView()">♙<br>Compte</button></div>
+
+<script>
+const products=[
+['Samsung Galaxy A17','128 Go • Noir',0,'smartphone','BEST-SELLER','phone'],
+['Coque iPhone 17 transparente','Anti-jaunissement • Transparente',0,'coque','BEST-SELLER','case'],
+['Verre trempé Ultra Résistant','Protection Premium • Haute résistance',0,'accessoire','BEST-SELLER','glass'],
+['iPhone 15 Pro','Occasion • Garantie Phoenix Lab',0,'smartphone','OCCASION','phone'],
+['AirPods Pro 2','USB-C',249,'audio','BEST-SELLER','buds'],
+['Chargeur USB-C 20W','Phoenix Lab',19.90,'chargeur','BEST-SELLER','charger'],
+['Câble USB-C vers Lightning','1 m • Phoenix Lab',14.90,'accessoire','BEST-SELLER','cable'],
+['Batterie externe 20 000 mAh','Charge rapide',29.90,'accessoire','BEST-SELLER','power']]
+let cart=[];
+const euro=n=>n.toLocaleString('fr-BE',{minimumFractionDigits:2,maximumFractionDigits:2})+' €';
+function art(type){return type==='phone'?'<div class="fakephone"></div>':type==='buds'?'<div class="fakebuds"></div>':type==='charger'?'<div class="fakecharger"></div>':type==='case'?'<div class="fakecase"></div>':type==='glass'?'<div style="width:82px;height:145px;border:2px solid #bfc5cc;border-radius:16px;background:linear-gradient(135deg,#ffffff22,#ffffff08);box-shadow:0 0 18px #ffffff18;position:relative"><div style="position:absolute;inset:8px;border:1px solid #ffffff33;border-radius:11px"></div></div>':'<div style="font-size:54px">▣</div>'}
+function render(list=products){document.getElementById('grid').innerHTML=list.map((p,i)=>`<article class="product"><span class="tag">${p[4]}</span><div class="photo">${art(p[5])}</div><h3>${p[0]}</h3><div class="sub">${p[1]}</div><div class="price">${p[2]===0?'Prix à définir':euro(p[2])} ${p[6]?`<span class="old">${euro(p[6])}</span>`:''}</div><div class="stars">★★★★★</div><button class="add" onclick="add(${i})">🛒 Ajouter au panier</button> <button class="heart">♡</button></article>`).join('')}
+function add(i){if(products[i][2]===0){alert('Prix à définir pour ce produit dans le prototype.');return}cart.push(products[i]);update();openCart()}
+function update(){document.getElementById('count').textContent=cart.length;document.getElementById('cart').innerHTML=cart.length?cart.map((p,i)=>`<div class="cartrow"><div style="width:55px;height:55px;background:#171719;border-radius:7px;display:grid;place-items:center">${art(p[5])}</div><div style="flex:1"><b>${p[0]}</b><div class="sub">${euro(p[2])}</div></div><button class="heart" onclick="removeItem(${i})">×</button></div>`).join(''):'<p style="color:#999">Votre panier est vide.</p>';document.getElementById('total').textContent=euro(cart.reduce((s,p)=>s+p[2],0))}
+function removeItem(i){cart.splice(i,1);update()}
+function openCart(){document.getElementById('drawer').classList.add('open');document.getElementById('overlay').classList.add('show')}
+function closeCart(){document.getElementById('drawer').classList.remove('open');document.getElementById('overlay').classList.remove('show')}
+function filter(cat){render(cat==='all'?products:products.filter(p=>p[3]===cat))}
+document.getElementById('search').addEventListener('input',e=>{let q=e.target.value.toLowerCase();render(products.filter(p=>(p[0]+' '+p[1]).toLowerCase().includes(q)))});
+render();update();
+</script>
+</body>
+</html>
